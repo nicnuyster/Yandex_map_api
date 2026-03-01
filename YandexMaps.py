@@ -1,7 +1,7 @@
 import requests
 from YandexKeys import KeyClass
 
-class Response():
+class Zapros():
 
     YK = KeyClass()
     API_KEY = YK.GetKey("geo")
@@ -14,15 +14,16 @@ class Response():
         "geocode": address,
         "format": "json"
     }
+    response = requests.get(url, params=params)
+    data = response.json()
 
 if __name__ == "__main__":
 
-    Zapros = Response()
+    Zp = Zapros()
+    # resp = requests.get(Zp.url, params=Zp.params)
+    # data = resp.json()
+    print(Zp.data)
 
-    response = requests.get(Zapros.url, params=Zapros.params)
-    data = response.json()
-    print("yes")
-    
     # try:
     #     pos = Zapros.data["response"]["GeoObjectCollection"][0]["GeoObject"]["points"]["pos"]
     #     lon, lat = pos.split()
