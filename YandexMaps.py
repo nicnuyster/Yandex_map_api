@@ -3,27 +3,30 @@ from YandexKeys import KeyClass
 
 class Response():
 
-    API_KEY = " "
-    def __init__(self):
-        YK = KeyClass()
-        self.API_KEY = YK.GEO_API_KEY("geo")
+    YK = KeyClass()
+    API_KEY = YK.GetKey("geo")
 
     address = "Москва, Кремль"
-    url = "https://geocode-maps.yandex.ru/1.x/"
+    url = "https://geocode-maps.yandex.ru/v1/"
+
     params = {
         "apikey": API_KEY,
         "geocode": address,
         "format": "json"
     }
-    response = requests.get(url, params=params)
-    data = response.json()
 
 if __name__ == "__main__":
 
     Zapros = Response()
-    try:
-        pos = Zapros.data["response"]["GeoObjectCollection"][0]["GeoObject"]["points"]["pos"]
-        lon, lat = pos.split()
-        print(f"Координаты: {lat}, {lon}")
-    except:
-        print("No")
+
+    response = requests.get(Zapros.url, params=Zapros.params)
+    data = response.json()
+    print("yes")
+    
+    # try:
+    #     pos = Zapros.data["response"]["GeoObjectCollection"][0]["GeoObject"]["points"]["pos"]
+    #     lon, lat = pos.split()
+    #     print(f"Координаты: {lat}, {lon}")
+    #     print("yes")
+    # except:
+    #     print("no")
