@@ -6,29 +6,35 @@ class Zapros():
 
     YK = KeyClass()
     API_KEY = YK.GetKey("geo")
-
-    address = "Москва, Кремль"
     url = "https://geocode-maps.yandex.ru/v1/"
 
-    params = {
-        "apikey": API_KEY,
-        "geocode": address,
-        "format": "json"
-    }
-    response = requests.get(url, params=params)
-    data = response.json()
+    def GetCords(self, Cords = 0, Addr = "Москва, Кремль"):
+        
+        params = {
+            "apikey": self.API_KEY,
+            "geocode": Addr,
+            "format": "json"
+        }
+        response = requests.get(self.url, params=params)
+        print("request send")
+        return response.json() #returns dict
+
+    def JSONDump(self, data):
+        with open('JSONDump.json', 'w') as f:
+            json.dump(data, f, indent = 2)
+        print("JSON Dumped")
+    
+    def JSONWrite(self, data):
+        with open('JSONWrite.json', 'w') as f:
+            f.write(data)
+        print("JSON Written")
+
+    def DataWrap(self, data):
+        print("yes ."
+        "")
 
 if __name__ == "__main__":
 
     Zp = Zapros()
-    # resp = requests.get(Zp.url, params=Zp.params)
-    # data = resp.json()
-    print(Zp.data)
-
-    # try:
-    #     pos = Zapros.data["response"]["GeoObjectCollection"][0]["GeoObject"]["points"]["pos"]
-    #     lon, lat = pos.split()
-    #     print(f"Координаты: {lat}, {lon}")
-    #     print("yes")
-    # except:
-    #     print("no")
+    data = Zp.GetCords()
+    Zp.JSONDump(data)
