@@ -1,9 +1,12 @@
+#backend imports
 import requests
 import json
 
-from LocationData import Location
-from YandexKeys import KeyClass
+#local imports
+from LocationData import Location   #class for data structure
+from YandexKeys import KeyClass     #API key handler
 
+#class for Yk geocoder
 class Zapros():
 
     YK = KeyClass()
