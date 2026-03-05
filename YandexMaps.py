@@ -13,6 +13,7 @@ class Zapros():
     API_KEY = YK.GetKey("geo")
     url = "https://geocode-maps.yandex.ru/v1/"
 
+    # GET
     # 55.75116001409619, 37.6175783034896 - Московский Кремль
     def GetCords(self, Cords = 0, Addr = "Москва, Кремль"):
         
@@ -25,6 +26,7 @@ class Zapros():
         print("request send")
         return response.json() #returns dict
 
+    # Data Handl
     def JSONDump(self, data):
         with open('JSONDump.json', 'w') as f:
             json.dump(data, f, indent = 2)
@@ -35,44 +37,58 @@ class Zapros():
             f.write(data)
         print("JSON Written")
 
-    
-    def DataGeneral(self, data, debug = True):
-        
-        numb1 = Location()
-
+    def DataGeneral (self, data, debug = False):
         geo_obj = data['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']
         components = geo_obj['metaDataProperty']['GeocoderMetaData']['Address']['Components']
 
         # точка инвертированна
         coords = geo_obj['Point']['pos']
-        numb1.longitude, numb1.latitude = coords.split(" ")
-        
+        longitude, latitude = coords.split(" ")
+        country = ""
+        province = ""
+        locality = ""
+        district = ""
+
         for component in components:
             kind = component['kind']
             name = component['name']
 
             match kind:
                 case 'country':
-                    numb1.country = name
+                    country = name
                 case 'province':
-                    numb1.province = name
+                    province = name
                 case 'locality':
-                    numb1.locality = name
+                    locality = name
                 case 'district':
-                    numb1.district = name
+                    district = name
                 case _:
                     print("match case error in Zapros.DataWrap()")
         print("general params captured")
         if debug == True:
-            print(f"Country - {numb1.country}")
-            print(f"Province - {numb1.province}")
-            print(f"Locality - {numb1.locality}")
-            print(f"District - {numb1.district}")
-            print(f"Positions - long: {numb1.latitude}, lati: {numb1.longitude}")
+            print(f"Country - {country}")
+            print(f"Province - {province}")
+            print(f"Locality - {locality}")
+            print(f"District - {district}")
+            print(f"Positions - long: {latitude}, lati: {longitude}")
+        datajson = {
+            "country": country,
+            "province": province,
+            "locality": locality,
+            "district": district,
+            "latitude": latitude,
+            "longitude": longitude,
+        }
+        return datajson
 
 if __name__ == "__main__":
 
     Zp = Zapros()
     data = Zp.GetCords(0, 'Тверь, Музей козла')
     #Zp.JSONDump(data)
-    Zp.DataGeneral(data)
+
+    datajson = Zp.DataGeneral(data, False)
+    LD = Location()
+    LD.JSONMake(datajson)
+    print(datajson)
+    Zp.JSONDump(datajson)
