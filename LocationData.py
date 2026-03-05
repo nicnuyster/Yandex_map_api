@@ -1,6 +1,7 @@
 class Location():
     
-    position = ""
+    longitude = ""
+    latitude = ""
     country = ""
     province = ""
     locality = ""

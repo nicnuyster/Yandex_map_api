@@ -41,7 +41,8 @@ class Zapros():
         components = geo_obj['metaDataProperty']['GeocoderMetaData']['Address']['Components']
 
         # точка инвертированна
-        numb1.position = geo_obj['Point']['pos']
+        coords = geo_obj['Point']['pos']
+        numb1.longitude, numb1.latitude = coords.split(" ")
         
         for component in components:
             kind = component['kind']
@@ -64,11 +65,11 @@ class Zapros():
             print(f"Province - {numb1.province}")
             print(f"Locality - {numb1.locality}")
             print(f"District - {numb1.district}")
-            print(f"Position - {numb1.position}")
+            print(f"Positions - long: {numb1.latitude}, lati: {numb1.longitude}")
 
 if __name__ == "__main__":
 
     Zp = Zapros()
-    data = Zp.GetCords()
+    data = Zp.GetCords(0, 'Тверь, Музей козла')
     #Zp.JSONDump(data)
     Zp.DataGeneral(data)
