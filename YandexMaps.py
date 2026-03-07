@@ -72,6 +72,7 @@ class Zapros():
             print(f"District - {district}")
             print(f"Positions - long: {latitude}, lati: {longitude}")
         datajson = {
+            
             "country": country,
             "province": province,
             "locality": locality,
@@ -84,11 +85,11 @@ class Zapros():
 if __name__ == "__main__":
 
     Zp = Zapros()
-    data = Zp.GetCords(0, 'Тверь, Музей козла')
+    data = Zp.GetCords(0, 'Байкал')
     #Zp.JSONDump(data)
 
     datajson = Zp.DataGeneral(data, False)
     LD = Location()
     LD.JSONMake(datajson)
     print(datajson)
-    Zp.JSONDump(datajson)
+    #Zp.JSONDump(datajson)
