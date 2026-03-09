@@ -2,6 +2,7 @@ import json
 
 class Location():
     
+    address = ""
     latitude = ""
     longitude = ""
     
@@ -13,6 +14,7 @@ class Location():
     def JSONMake(self, data):
 
         data = {
+            "address": self.address,
             "latitude": self.latitude,
             "longitude": self.longitude,
             "country": self.country,

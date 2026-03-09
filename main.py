@@ -5,11 +5,11 @@ from DataBaseHandler import DataBaseEvents
 if __name__ == "__main__":
     
     Zp = Zapros()
-    data = Zp.GetCords(0, 'Байкал')
-    #Zp.JSONDump(data)
+    data = Zp.GetCords()
+    Zp.JSONDump(data)
 
     datajson = Zp.DataGeneral(data, False)
     LD = Location()
-    LD.JSONMake(datajson)
+    #LD.JSONMake(datajson)
     print(datajson)
     #Zp.JSONDump(datajson)
