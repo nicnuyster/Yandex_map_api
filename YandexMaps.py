@@ -37,14 +37,15 @@ class Zapros():
             f.write(data)
         print("JSON Written")
 
-    def DataGeneral (self, data, debug = False):
+    def DataGeneral (self, data, loc: Location, debug = False):
         geo_obj = data['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']
         components = geo_obj['metaDataProperty']['GeocoderMetaData']['Address']['Components']
 
         # точка инвертированна
         coords = geo_obj['Point']['pos']
         longitude, latitude = coords.split(" ")
-        address = ""
+
+        address = data['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['request']
         country = ""
         province = ""
         locality = ""
@@ -67,6 +68,7 @@ class Zapros():
                     print("match case error in Zapros.DataWrap()")
         print("general params captured")
         if debug == True:
+            print(f"Address - {address}")
             print(f"Country - {country}")
             print(f"Province - {province}")
             print(f"Locality - {locality}")
@@ -81,16 +83,12 @@ class Zapros():
             "latitude": latitude,
             "longitude": longitude,
         }
+        loc.address = address 
+        loc.country = country
+        loc.province = province
+        loc.locality = locality
+        loc.district = district
+        loc.latitude = latitude
+        loc.longitude = longitude
+
         return datajson
-
-if __name__ == "__main__":
-
-    Zp = Zapros()
-    data = Zp.GetCords(0, 'Байкал')
-    #Zp.JSONDump(data)
-
-    datajson = Zp.DataGeneral(data, False)
-    LD = Location()
-    LD.JSONMake(datajson)
-    print(datajson)
-    #Zp.JSONDump(datajson)

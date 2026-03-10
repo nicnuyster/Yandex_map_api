@@ -2,6 +2,7 @@
 import sqlite3                      #
 from dataclasses import dataclass   #
 from typing import Optional         #
+from LocationData import Location
 
 class DataBaseEvents():
 
@@ -14,7 +15,7 @@ class DataBaseEvents():
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS locations (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            name TEXT NOT NULL,
+                            address TEXT,
                             country TEXT,
                             province TEXT,
                             locality TEXT,
@@ -25,6 +26,21 @@ class DataBaseEvents():
         ''')
         self.conn.commit()
     
-    def insertiteration(self, ):
-        print("ok")
+    def insertiteration(self, loc: Location):
+        self.cursor.execute('''
+            INSERT INTO locations (address, country, province, locality, district, latitude, longtitude)
+            VALUES (?,?,?,?,?,?,?)
+            ''', (loc.address, loc.country, loc.province, loc.locality, loc.district, loc.latitude, loc.longitude))
+        self.conn.commit()
+        print(self.cursor.lastrowid)
+        #return self.cursor.lastrowid
+
+    def deletetable(self, table_name):
+
+        self.cursor.execute(f'''
+            DROP TABLE IF EXISTS {table_name}
+        ''')
+
+    def close(self):
+        self.clonn.close()
             
