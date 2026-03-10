@@ -44,6 +44,7 @@ class Zapros():
         # точка инвертированна
         coords = geo_obj['Point']['pos']
         longitude, latitude = coords.split(" ")
+        address = ""
         country = ""
         province = ""
         locality = ""
@@ -72,7 +73,7 @@ class Zapros():
             print(f"District - {district}")
             print(f"Positions - long: {latitude}, lati: {longitude}")
         datajson = {
-            
+            "address": address,
             "country": country,
             "province": province,
             "locality": locality,

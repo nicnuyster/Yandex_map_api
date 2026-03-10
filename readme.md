@@ -8,3 +8,7 @@
 4) *DataBaseHandler.py* для работы с SQLite
 
 JSONDump_пример_ответа.json - ответ API
+
+## TODO:
+1) обратное геокодирование
+2) БД
