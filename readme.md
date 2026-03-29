@@ -7,8 +7,8 @@
 3) *LocationData.py* для временного хранения данных
 4) *DataBaseHandler.py* для работы с SQLite
 
-JSONDump_пример_ответа.json - ответ API
+JSONDump_пример_ответа.json - ответ яндекса API
+
 
 ## TODO:
 1) обратное геокодирование
-2) БД
